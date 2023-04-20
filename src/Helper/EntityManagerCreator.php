@@ -8,21 +8,22 @@ use Doctrine\ORM\ORMSetup;
 
 class EntityManagerCreator
 {
-    public static function createEntityManager()
+    public static function createEntityManager(): EntityManager
     {
         $config = ORMSetup::createAttributeMetadataConfiguration(
-            paths: [__DIR__ . "/src"],
+            paths: [__DIR__ . "/.."],
             isDevMode: true
         );
 
         $connection = DriverManager::getConnection([
-            'dbname' => 'ttivos',
+            'dbname' => 'doctrine',
             'user' => 'postgres',
             'password' => 'root',
             'host' => 'localhost',
             'driver' => 'pdo_pgsql',
+            'port' => 5432
         ], $config);
 
-        $entityManager = new EntityManager($connection, $config);
+        return new EntityManager($connection, $config);
     }
 }
